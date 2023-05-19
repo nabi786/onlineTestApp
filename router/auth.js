@@ -9,7 +9,7 @@ router.post("/register", obj.register)
 
 
 // login user
-
+router.post("/login", obj.loginUser)
 
 
 module.exports = router
