@@ -33,7 +33,7 @@ const register= async(req,res)=>{
             await newUser.save()
             
             
-            loginUser()
+            await loginUser(req,res)
         }else{
             res.status(200).json({success : false, msg : "account already exist with this email"})
         }
