@@ -56,16 +56,21 @@ const getQuestionsForTest = async(req,res)=>{
     
         var questions = await modal.questions.find()
 
-        var array = []
-        questions.forEach((item,index)=>{
-            item.answer = "*"
-            array.push(item)
-        })
-        
+        if(questions.length > 0){
 
-        const randomItems = getRandomItemsFromArray(array, "3");
-
-        res.status(200).json({success : false, data : randomItems})
+            var array = []
+            questions.forEach((item,index)=>{
+                item.answer = "*"
+                array.push(item)
+            })
+            
+            
+            const randomItems = getRandomItemsFromArray(array, "3");
+            
+            res.status(200).json({success : true, data : randomItems})
+        }else {
+            res.status(200).json({success : false, data : [], msg : "no test found"})
+        }
     }catch(err){
         res.status(500).json({success : false, msg : err.msg})
     }
