@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken")
 
 
 // resgister function 
-
 const register= async(req,res)=>{
     try{
 
@@ -25,6 +24,7 @@ const register= async(req,res)=>{
                 lastName: req.body.lastName,
                 email: req.body.email,
                 password : password,
+                role : "user"
             })
             
 
@@ -46,7 +46,6 @@ const register= async(req,res)=>{
 
 
 // login user 
-
 const loginUser= async(req,res)=>{
     try{    
 
@@ -61,13 +60,12 @@ const loginUser= async(req,res)=>{
         var isMatch = await bcrypt.compare(req.body.password, findAcount.password)
         if(isMatch == true){
 
-
             var jwtPayLoad = {
                 id : findAcount.id,
                 firstName :  findAcount.firstName,
                 lastName :  findAcount.lastName,
                 email :  findAcount.email,
-                
+                role : findAcount.role,  
             }
             // json expire data
             const jwtData = {
@@ -97,7 +95,7 @@ const loginUser= async(req,res)=>{
 
 
 
-
+// exporting object
 const obj = {register , loginUser}
 
 

@@ -16,6 +16,7 @@ app.use(cors());
 //Route Prefixes  here
 
 app.use("/api", require("./router/auth"))
+app.use("/api", require("./router/adminsRoutes"))
 
 
 

@@ -15,16 +15,62 @@ const userSchema = new mongoose.Schema(
         type: String,
         required : true 
     },
+   
     password : {
         type : String ,
         required : true 
-    }},
+    },
+    role : {
+      type : String,
+      required : true
+    }
+  },
+    
   { timestamps: true }
   
 );
 
 
-var users = mongoose.model("user", userSchema);
 
-const modal = {users}
+// question Schema
+const questionSchema = new mongoose.Schema(
+  {
+    question: {
+      type: String,
+      required: true,
+    },
+    option1: {
+      type: String,
+      required: true,
+    },
+    option2: {
+      type: String,
+      required: true,
+    },
+    option3: {
+      type: String,
+      required: true,
+    },
+    option4: {
+      type: String,
+      required: true,
+    },
+    answer: {
+      type: String,
+      required: true,
+    },
+
+  },
+  { timestamps: true }
+);
+
+// 
+var users = mongoose.model("user", userSchema);
+var questions = mongoose.model("questions", questionSchema);
+
+
+// create object
+const modal = {users , questions}
+
+// exporing model
 module.exports = modal
