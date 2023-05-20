@@ -51,22 +51,15 @@ const createQuestions = async(req,res)=>{
 
 const getQuestionsForTest = async(req,res)=>{
     try{
-
-    
-    
         var questions = await modal.questions.find()
-
         if(questions.length > 0){
-
             var array = []
             questions.forEach((item,index)=>{
                 item.answer = "*"
                 array.push(item)
             })
             
-            
             const randomItems = getRandomItemsFromArray(array, "3");
-            
             res.status(200).json({success : true, data : randomItems})
         }else {
             res.status(200).json({success : false, data : [], msg : "no test found"})
@@ -102,7 +95,44 @@ function getRandomItemsFromArray(arr, count) {
  
 
 
-const obj = {createQuestions , getQuestionsForTest}
+
+
+//   Get question's Answers by ID
+const getAnswers = async (req,res)=>{
+    try{
+
+        var array = req.body.idsArry
+
+        
+        var questionsByID  = await modal.questions.find()
+
+        if(questionsByID.length > 0){
+
+
+            var matchedAry = []
+            questionsByID.forEach((item,index)=>{
+                array.forEach((item2,index2)=>{
+                    // console.log(item2)
+                    if(item.id === item2){
+                        matchedAry.push(item) 
+                    }
+                })
+            })
+
+            res.status(200).json({success : true, data : matchedAry}) 
+        }else{
+            
+            res.status(200).json({success : false, data : [], msg : "no question found"}) 
+        }
+
+
+    }catch(err){
+        res.status(500).json({success : false, msg : err.msg}) 
+    }
+}
+
+
+const obj = {createQuestions , getQuestionsForTest,getAnswers}
 
 
 module.exports = obj

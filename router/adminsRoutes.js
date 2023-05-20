@@ -11,6 +11,10 @@ router.post("/create_Questions",auth, obj.createQuestions)
 router.get("/getQuestionsForTest",auth, obj.getQuestionsForTest)
 
 
+// get answer of question
+router.post("/getAnswers",auth, obj.getAnswers)
+
+
 
 
 module.exports = router
