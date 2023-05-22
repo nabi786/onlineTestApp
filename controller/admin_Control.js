@@ -12,20 +12,27 @@ const createQuestions = async(req,res)=>{
     try{
 
 
-        console.log(req.user)
-        if(!req.body.question || !req.body.option1 || !req.body.option2 || !req.body.option3 || !req.body.answer){
+        // console.log(req.user)
+        if(!req.body.question || !req.body.options || !req.body.answer){
             res.status(500).json({success : false, msg : "invalid payload"})
         }
 
         // creating object
         if(req.user.role == "admin"){
 
+            var optionsAry = req.body.options;
+
+            // var obj = []
+            // optionsAry.forEach((item,index)=>{
+
+            //     var opt = {key :albates[index], value : item}
+            //     obj.push(opt)
+            // })
+            // console.log(obj)
+
             var newQuestion = new modal.questions({
                 question : req.body.question,
-                option1 : req.body.option1,
-                option2 : req.body.option2,
-                option3 : req.body.option3,
-                option4 : req.body.option4,
+                options : optionsAry,
                 answer : req.body.answer
             })
 
@@ -48,7 +55,6 @@ const createQuestions = async(req,res)=>{
 
 
 // getQuestions
-
 const getQuestionsForTest = async(req,res)=>{
     try{
         var questions = await modal.questions.find()
@@ -59,7 +65,7 @@ const getQuestionsForTest = async(req,res)=>{
                 array.push(item)
             })
             
-            const randomItems = getRandomItemsFromArray(array, "3");
+            const randomItems = getRandomItemsFromArray(array, "25");
             res.status(200).json({success : true, data : randomItems})
         }else {
             res.status(200).json({success : false, data : [], msg : "no test found"})
@@ -114,7 +120,7 @@ const getAnswers = async (req,res)=>{
                 array.forEach((item2,index2)=>{
                     // console.log(item2)
                     if(item.id === item2){
-                        matchedAry.push(item) 
+                        matchedAry.push(item)
                     }
                 })
             })
