@@ -39,10 +39,7 @@ const questionSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    options: [{
-      type : Object,
-      required : true
-    }],
+    options: [{type : Object, required : true}],
     answer: {
       type: String,
       required: true,

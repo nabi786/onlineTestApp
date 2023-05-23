@@ -22,12 +22,12 @@ const createQuestions = async(req,res)=>{
 
             var optionsAry = req.body.options;
 
-            var obj = []
-            optionsAry.forEach((item,index)=>{
-                var opt = {key :albates[index], value : item}
-                obj.push(opt)
-            })
-            console.log(obj)
+                
+              var obj = []
+              optionsAry.forEach((item,index)=>{
+                obj.push({value : item})
+              })
+            
 
             var newQuestion = new modal.questions({
                 question : req.body.question,
@@ -44,6 +44,7 @@ const createQuestions = async(req,res)=>{
             res.status(404).json({success : true, msg : "only admin has access to add qustions"})
         }
     }catch(err){
+        console.log(err)
         res.status(500).json({success : false, msg : err.msg})
     }
 }

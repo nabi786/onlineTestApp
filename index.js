@@ -3,6 +3,7 @@ require("./config/db");
 var express = require("express");
 var path = require("path");
 var cors = require("cors");
+const PORT = 3000;
 
 var app = express();
 
@@ -31,6 +32,6 @@ app.all("*", function (req, res) {
 
 
 // listening on the port number
-app.listen(process.env.PORT || "3000", () => {
-  console.log("App is Running on Port 3001");
+app.listen(PORT, () => {
+  console.log(`App is Running on Port ${PORT}`);
 });
