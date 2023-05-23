@@ -22,17 +22,16 @@ const createQuestions = async(req,res)=>{
 
             var optionsAry = req.body.options;
 
-            // var obj = []
-            // optionsAry.forEach((item,index)=>{
-
-            //     var opt = {key :albates[index], value : item}
-            //     obj.push(opt)
-            // })
-            // console.log(obj)
+            var obj = []
+            optionsAry.forEach((item,index)=>{
+                var opt = {key :albates[index], value : item}
+                obj.push(opt)
+            })
+            console.log(obj)
 
             var newQuestion = new modal.questions({
                 question : req.body.question,
-                options : optionsAry,
+                options : obj,
                 answer : req.body.answer
             })
 
