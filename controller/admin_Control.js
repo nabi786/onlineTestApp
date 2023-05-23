@@ -22,7 +22,7 @@ const createQuestions = async(req,res)=>{
 
             var optionsAry = req.body.options;
 
-                
+
               var obj = []
               optionsAry.forEach((item,index)=>{
                 obj.push({value : item})
@@ -108,24 +108,46 @@ const getAnswers = async (req,res)=>{
     try{
 
         var array = req.body.idsArry
-
+        var correct_answers = 0;
+        var wrong_anserwers = 0
         
         var questionsByID  = await modal.questions.find()
 
         if(questionsByID.length > 0){
 
 
-            var matchedAry = []
+            var matchedAry = [];
             questionsByID.forEach((item,index)=>{
                 array.forEach((item2,index2)=>{
                     // console.log(item2)
-                    if(item.id === item2){
+                    if(item.id === item2.id){
                         matchedAry.push(item)
+                        var options = item.options
+                        var answer = item.answer
+                        options_ary = []
+                        options.forEach((item3,index3)=>{
+                            options_ary.push(item3.value)
+                        })
+
+                        console.log(options_ary)
+                       var find_index =options_ary.indexOf(answer)
+                       console.log(find_index)
+                       console.log("answer ", answer)
+                       console.log("My option ", Number(item2.option))
+                       if(find_index === Number(item2.option)){
+                            correct_answers++
+                       }else{
+                            wrong_anserwers++
+                       }
                     }
                 })
             })
 
-            res.status(200).json({success : true, data : matchedAry}) 
+
+            console.log("correct Answr ", correct_answers)
+            console.log("wrong_anserwers ", wrong_anserwers)
+
+        res.status(200).json({success : true, data : matchedAry , correct_answers , wrong_anserwers}) 
         }else{
             
             res.status(200).json({success : false, data : [], msg : "no question found"}) 
@@ -133,6 +155,7 @@ const getAnswers = async (req,res)=>{
 
 
     }catch(err){
+        console.log(err)
         res.status(500).json({success : false, msg : err.msg}) 
     }
 }
@@ -141,4 +164,8 @@ const getAnswers = async (req,res)=>{
 const obj = {createQuestions , getQuestionsForTest,getAnswers}
 
 
-module.exports = obj
+module.exports = obj;
+
+
+
+
