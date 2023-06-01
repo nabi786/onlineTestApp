@@ -16,5 +16,10 @@ router.post("/getAnswers",auth, obj.getAnswers)
 
 
 
+// edit users 
+router.patch("/edit_user",auth, obj.edit_user)
+
+
+
 
 module.exports = router
