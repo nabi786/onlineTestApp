@@ -65,7 +65,7 @@ const getQuestionsForTest = async(req,res)=>{
                 array.push(item)
             })
             
-            const randomItems = getRandomItemsFromArray(array, "25");
+            const randomItems = getRandomItemsFromArray(array, "60");
             res.status(200).json({success : true, data : randomItems})
         }else {
             res.status(200).json({success : false, data : [], msg : "no test found"})
@@ -109,11 +109,18 @@ const getAnswers = async (req,res)=>{
 
         var array = req.body.idsArry
         var correct_answers = 0;
-        var wrong_anserwers = 0
+        var wrong_anserwers = 0;
         
         var questionsByID  = await modal.questions.find()
 
+
+
         if(questionsByID.length > 0){
+
+
+            var percentage_of_each_question = 100/60
+
+            console.log("percentage_of_each_question ", percentage_of_each_question)
 
 
             var matchedAry = [];
@@ -129,7 +136,7 @@ const getAnswers = async (req,res)=>{
                             options_ary.push(item3.value)
                         })
 
-                        console.log(options_ary)
+                        // console.log(options_ary)
                        var find_index =options_ary.indexOf(answer)
                        console.log(find_index)
                        console.log("answer ", answer)
@@ -147,7 +154,11 @@ const getAnswers = async (req,res)=>{
             console.log("correct Answr ", correct_answers)
             console.log("wrong_anserwers ", wrong_anserwers)
 
-        res.status(200).json({success : true, data : matchedAry , correct_answers , wrong_anserwers}) 
+
+            var total_percetange = percentage_of_each_question*correct_answers
+            total_percetange = total_percetange.toFixed(2)
+
+        res.status(200).json({success : true, data : matchedAry , correct_answers , wrong_anserwers, percentage : total_percetange}) 
         }else{
             
             res.status(200).json({success : false, data : [], msg : "no question found"}) 
