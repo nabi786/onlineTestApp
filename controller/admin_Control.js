@@ -231,7 +231,7 @@ const get_all_users = async (req, res) => {
 
 
 // const dleete user
-const delet_user  = async ()=>{
+const delet_user  = async (req,res)=>{
   try{
 
     var admin = req.user;
