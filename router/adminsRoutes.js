@@ -19,6 +19,9 @@ router.post("/getAnswers",auth, obj.getAnswers)
 // edit users 
 router.patch("/edit_user",auth, obj.edit_user)
 
+// get all User
+router.get("/get_all_users",auth, obj.get_all_users)
+
 
 
 

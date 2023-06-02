@@ -95,8 +95,31 @@ const loginUser= async(req,res)=>{
 
 
 
+
+// get CUrrent User
+const dash = async(req,res)=>{
+    try{
+        var currentUser = req.user
+
+        console.log(currentUser)
+        var currentUser = await modal.users.findOne({_id : currentUser.id})
+
+        if(currentUser){
+            currentUser.password = null
+            res.status(200).json({success : true, dash : currentUser})
+        }else{
+            
+            res.status(404).json({success : false, msg : "no user found"})
+        }
+    }catch(err){
+        res.status(500).json({success : false, msg : err.message})
+    }
+}
+
+
+
 // exporting object
-const obj = {register , loginUser}
+const obj = {register , loginUser , dash}
 
 
 module.exports = obj

@@ -195,6 +195,38 @@ const edit_user = async (req, res) => {
   }
 };
 
-const obj = { createQuestions, getQuestionsForTest, getAnswers, edit_user };
+
+
+
+// get all User
+
+const get_all_users = async (req, res) => {
+  try {
+    var admin = req.user;
+    console.log("admin ", admin);
+    if (admin.role === "admin") {
+
+          var users = await modal.users.find({role : "user"})
+        
+          if(users){
+
+
+              res.status(200).json({ success: true, users });
+            }else{
+                
+                res.status(404).json({ success: false, msg : "no user found" });
+          }
+    } else {
+      res
+        .status(200)
+        .json({ success: true, msg: "only admin can access all users" });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ success: false, msg: err.msg });
+  }
+};
+
+const obj = { createQuestions, getQuestionsForTest, getAnswers, edit_user , get_all_users };
 
 module.exports = obj;
