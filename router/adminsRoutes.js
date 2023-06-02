@@ -23,6 +23,9 @@ router.patch("/edit_user",auth, obj.edit_user)
 router.get("/get_all_users",auth, obj.get_all_users)
 
 
+router.delete("/delet_user",auth, obj.delet_user)
+
+
 
 
 module.exports = router

@@ -227,6 +227,41 @@ const get_all_users = async (req, res) => {
   }
 };
 
-const obj = { createQuestions, getQuestionsForTest, getAnswers, edit_user , get_all_users };
+
+
+
+// const dleete user
+const delet_user  = async ()=>{
+  try{
+
+    var admin = req.user;
+    console.log("admin ", admin);
+    if (admin.role === "admin") {
+
+          var user = await modal.users.find({_id : req.body.userID})
+        
+          if(user){
+
+              await modal.users.findOneAndDelete({_id : req.body.userID})
+
+              res.status(200).json({ success: true, msg : "user deleted succcessfully" });
+            }else{
+                
+                res.status(404).json({ success: false, msg : "no user found" });
+          }
+    } else {
+      res
+        .status(200)
+        .json({ success: true, msg: "only admin can delete the user" });
+    }
+    
+
+  }catch(err){
+    console.log(err);
+    res.status(500).json({ success: false, msg: err.msg });
+  }
+}
+
+const obj = { createQuestions, getQuestionsForTest, getAnswers, edit_user , get_all_users ,delet_user};
 
 module.exports = obj;
