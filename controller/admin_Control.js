@@ -262,6 +262,101 @@ const delet_user  = async (req,res)=>{
   }
 }
 
-const obj = { createQuestions, getQuestionsForTest, getAnswers, edit_user , get_all_users ,delet_user};
+
+
+
+// function to get answer for exam section
+
+const getAnswerForExam = async (req, res) => {
+  try {
+    var array = req.body.idsArry;
+    var correct_answers = 0;
+    var wrong_anserwers = 0;
+    var totalPercentage = 100
+
+    var questionsByID = await modal.questions.find();
+
+    if (questionsByID.length > 0) {
+      var percentage_of_each_question = totalPercentage / 60;
+
+      console.log("percentage_of_each_question007", percentage_of_each_question);
+
+
+
+      var matchedAry = [];
+      questionsByID.forEach((item, index) => {
+        array.forEach((item2, index2) => {
+          // console.log(item2)
+          if (item.id === item2.id) {
+            matchedAry.push(item);
+            var options = item.options;
+            var answer = item.answer;
+            options_ary = [];
+            options.forEach((item3, index3) => {
+              options_ary.push(item3.value);
+            });
+
+            // console.log(options_ary)
+            var find_index = options_ary.indexOf(answer);
+            console.log(find_index);
+            console.log("answer ", answer);
+            console.log("My option ", Number(item2.option));
+            if (find_index === Number(item2.option)) {
+              correct_answers++;
+            } else {
+              wrong_anserwers++;
+            }
+          }
+        });
+      });
+
+      // console.log("correct Answr ", correct_answers);
+      // console.log("wrong_anserwers ", wrong_anserwers);
+      console.log("this is user ", req.user)
+
+      var obtained_percentage = percentage_of_each_question * correct_answers;
+      obtained_percentage = obtained_percentage.toFixed(2);
+
+
+      var user = req.user;
+      var user = await modal.users.findOne({ _id: user.id });
+
+
+
+      var obj_percentage = Number(user.obtained_Percentage)+Number(obtained_percentage)
+      user.obtained_Percentage = obj_percentage;
+
+      var tot_percent = Number(user.Total_Percentange+totalPercentage)
+      user.Total_Percentange = tot_percent;
+
+      await user.save()
+
+      // making response json
+      res
+        .status(200)
+        .json({
+          success: true,
+          data: matchedAry,
+          correct_answers,
+          wrong_anserwers,
+          percentage: obtained_percentage,
+          total_percentage : totalPercentage
+        });
+    } else {
+      res
+        .status(200)
+        .json({ success: false, data: [], msg: "no question found" });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ success: false, msg: err.msg });
+  }
+};
+
+
+
+
+// making an object to send as module
+const obj = { createQuestions, getQuestionsForTest, getAnswers, edit_user , get_all_users ,delet_user , getAnswerForExam};
 
 module.exports = obj;

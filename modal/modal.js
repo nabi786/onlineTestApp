@@ -23,6 +23,14 @@ const userSchema = new mongoose.Schema(
     role : {
       type : String,
       required : true
+    },
+    obtained_Percentage : {
+      type : Number,
+      default: 0
+    },
+    Total_Percentange : {
+      type : Number,
+      default: 0
     }
   },
     

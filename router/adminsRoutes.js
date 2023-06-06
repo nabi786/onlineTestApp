@@ -16,6 +16,11 @@ router.post("/getAnswers",auth, obj.getAnswers)
 
 
 
+// get answers for Exam Section 
+router.post("/getAnswersExam",auth, obj.getAnswerForExam)
+
+
+
 // edit users 
 router.patch("/edit_user",auth, obj.edit_user)
 
