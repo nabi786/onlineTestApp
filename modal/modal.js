@@ -31,6 +31,14 @@ const userSchema = new mongoose.Schema(
     Total_Percentange : {
       type : Number,
       default: 0
+    },
+    total_questions : {
+      type : Number,
+      default : 0
+    },
+    correct_questions : {
+      type : Number,
+      default : 0
     }
   },
     

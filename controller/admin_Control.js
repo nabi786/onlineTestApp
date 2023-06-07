@@ -329,8 +329,19 @@ const getAnswerForExam = async (req, res) => {
       var tot_percent = Number(user.Total_Percentange+totalPercentage)
       user.Total_Percentange = tot_percent;
 
+
+      user.total_questions = Number(user.total_questions)+60
+      
+      user.correct_questions = Number(user.correct_questions)+Number(correct_answers)
+
+
+
+
+
+
       await user.save()
 
+      
       // making response json
       res
         .status(200)
